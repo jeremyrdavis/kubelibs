@@ -1,17 +1,23 @@
 package io.arrogantprogrammer.kubelibs;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.ws.rs.core.MediaType;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.with;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @QuarkusTest
 public class ParagraphResourceTest {
+
+    static ObjectMapper objectMapper;
 
     static String text = """
         My dear Watson, you know how bored I have been since we locked up Colonel Carruthers. My mind is like a racing engine, tearing itself to pieces because it is not connected up with the work for which it was built. Life is commonplace, the papers are sterile; audacity and romance seem to have passed forever from the criminal world. Can you ask me, then, whether I am ready to look into any new problem, however trivial it may prove? But here, unless I am mistaken, is our client.”
@@ -24,13 +30,13 @@ public class ParagraphResourceTest {
     @Test
     public void testAddingParagraph() {
 
-        Paragraph paragraph = new Paragraph().withText(text)
-        .byAuthor(author)
-        .locattedAt(url);
+        Paragraph paragraph = new Paragraph(text, author, url);
 
-        assertEquals(text, paragraph.getText());
-        assertEquals(author, paragraph.getAuthor());
-        assertEquals(url, paragraph.getUrl());
+        assertEquals(text, paragraph.text());
+        assertEquals(author, paragraph.author());
+        assertEquals(url, paragraph.url());
+
+        with().header("Content-Type", MediaType.APPLICATION_JSON).body(paragraph).when().post("/paragraph").then().statusCode(201);
     }
 
     @BeforeAll
