@@ -1,6 +1,6 @@
-package io.arrogantprogrammer.kubelibs.domain;
+package io.arrogantprogrammer.kubelibs.sourcematerial.domain;
 
-import io.arrogantprogrammer.kubelibs.TextSourceDTO;
+import io.arrogantprogrammer.kubelibs.sourcematerial.TextSourceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

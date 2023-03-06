@@ -1,7 +1,8 @@
 package io.arrogantprogrammer.kubelibs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.arrogantprogrammer.kubelibs.domain.TextSourceService;
+import io.arrogantprogrammer.kubelibs.sourcematerial.TextSourceDTO;
+import io.arrogantprogrammer.kubelibs.sourcematerial.domain.TextSourceService;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

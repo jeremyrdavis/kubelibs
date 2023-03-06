@@ -1,4 +1,4 @@
-package io.arrogantprogrammer.kubelibs.domain;
+package io.arrogantprogrammer.kubelibs.sourcematerial.domain;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 

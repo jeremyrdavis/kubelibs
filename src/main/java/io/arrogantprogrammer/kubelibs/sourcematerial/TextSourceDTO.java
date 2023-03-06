@@ -1,4 +1,4 @@
-package io.arrogantprogrammer.kubelibs;
+package io.arrogantprogrammer.kubelibs.sourcematerial;
 
 import java.net.URL;
 

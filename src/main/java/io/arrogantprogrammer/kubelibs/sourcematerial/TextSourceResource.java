@@ -1,6 +1,6 @@
-package io.arrogantprogrammer.kubelibs;
+package io.arrogantprogrammer.kubelibs.sourcematerial;
 
-import io.arrogantprogrammer.kubelibs.domain.TextSourceService;
+import io.arrogantprogrammer.kubelibs.sourcematerial.domain.TextSourceService;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
