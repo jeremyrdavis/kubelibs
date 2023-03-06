@@ -1,7 +1,9 @@
 package io.arrogantprogrammer.kubelibs;
 
+import io.arrogantprogrammer.kubelibs.domain.TextSourceService;
 import org.slf4j.Logger;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,23 +16,27 @@ import java.net.URISyntaxException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-@Path("/paragraph")
+@Path("/textsource")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ParagraphResource {
+public class TextSourceResource {
 
-    private static final Logger LOGGER = getLogger(ParagraphResource.class);
+    private static final Logger LOGGER = getLogger(TextSourceResource.class);
+
+    @Inject
+    TextSourceService textSourceService;
 
     @POST
-    public Response addParagraph(final Paragraph paragraph) {
+    public Response addTextSource(final TextSourceDTO textSource) {
 
-        LOGGER.info("adding: {}", paragraph);
+        LOGGER.info("adding: {}", textSource);
         URI uri = null;
         try {
             uri = new URI("/" + 01);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        return Response.created(uri).build();
+        TextSourceDTO result = textSourceService.addTextSource(textSource);
+        return Response.created(uri).entity(result).build();
     }
 }

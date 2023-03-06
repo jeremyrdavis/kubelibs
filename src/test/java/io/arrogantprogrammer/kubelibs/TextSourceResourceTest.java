@@ -1,10 +1,12 @@
 package io.arrogantprogrammer.kubelibs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.arrogantprogrammer.kubelibs.domain.TextSourceService;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,9 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @QuarkusTest
-public class ParagraphResourceTest {
+public class TextSourceResourceTest {
 
     static ObjectMapper objectMapper;
+
+    @Inject
+    TextSourceService textSourceService;
 
     static String text = """
         My dear Watson, you know how bored I have been since we locked up Colonel Carruthers. My mind is like a racing engine, tearing itself to pieces because it is not connected up with the work for which it was built. Life is commonplace, the papers are sterile; audacity and romance seem to have passed forever from the criminal world. Can you ask me, then, whether I am ready to look into any new problem, however trivial it may prove? But here, unless I am mistaken, is our client.”
@@ -28,15 +33,17 @@ public class ParagraphResourceTest {
 
     static URL url;
     @Test
-    public void testAddingParagraph() {
+    public void testAddingTextSource() {
 
-        Paragraph paragraph = new Paragraph(text, author, url);
+        TextSourceDTO textSource = new TextSourceDTO(null, text, author, url);
 
-        assertEquals(text, paragraph.text());
-        assertEquals(author, paragraph.author());
-        assertEquals(url, paragraph.url());
+        assertEquals(text, textSource.text());
+        assertEquals(author, textSource.author());
+        assertEquals(url, textSource.url());
 
-        with().header("Content-Type", MediaType.APPLICATION_JSON).body(paragraph).when().post("/paragraph").then().statusCode(201);
+        with().header("Content-Type", MediaType.APPLICATION_JSON).body(textSource).when().post("/textsource").then().statusCode(201);
+
+        assertEquals(1, textSourceService.allSources().size());
     }
 
     @BeforeAll
